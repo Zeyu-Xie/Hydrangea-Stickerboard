@@ -1,4 +1,4 @@
-all: install
+all: install build apply_build
 
 install:
 	echo "Installing dependencies in page."
