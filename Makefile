@@ -4,6 +4,10 @@ install:
 	echo "Installing dependencies in page."
 	cd page && npm install && cd ..
 
+start:
+	echo "Starting the react project to debug."
+	cd page && npm start
+
 build: 
 	echo "Running build process in page."
 	cd page && npm run build && cd ..
