@@ -1,8 +1,16 @@
 import React from "react"
 import "./App.css"
 import hydrangea from "./hydrangea.png"
+import axios from "axios"
 
 class App extends React.Component {
+
+    file = React.createRef()
+
+    componentDidMount() {
+        this.submit = this.submit.bind(this)
+    }
+
     render() {
         return (
             <div className="container">
@@ -24,14 +32,41 @@ class App extends React.Component {
                             <li className="ui-state-default"><span className="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 6</li>
                             <li className="ui-state-default"><span className="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 7</li>
                         </ul> */}
-                        <div id="sub-right-content-box" className="d-flex m-auto">
-                            <button className="btn btn-outline-secondary">Submit</button>
-                            <a href="http://127.0.0.1:15372/stickerboard/api/downloadImage">Download</a>
+
+                        <div id="sub-right-content-box" className="input-group m-auto">
+                            <input type="file" className="form-control" placeholder="Recipient's username" aria-label="Recipient's username with two button addons" ref={this.file} multiple />
+                            <button className="btn btn-outline-secondary" type="button" onClick={this.submit}>Submit</button>
+                            <a href="#" className="btn btn-outline-secondary" type="button">Download</a>
                         </div>
                     </div>
                 </div>
             </div>
         )
+    }
+
+    submit = () => {
+        let files = this.file.current.files
+        const num = files.length
+        console.log(num)
+
+        let formData = new Array(num)
+        for (let i = 0; i < num; i++) {
+            let fd = new FormData()
+            fd.append("file", "12345")
+            console.log(fd)
+            formData[i] = fd
+        }
+
+        axios.post("http://127.0.0.1:15372/stickerboard/api/submitImages", formData[0], {
+            headers: {
+                "Content-Type": "multipart/form-data",
+                "Accept": "application/json"
+            }
+        }).then(res => {
+            console.log(res)
+        }).catch(err => {
+            console.log("ERROR", err)
+        })
     }
 }
 

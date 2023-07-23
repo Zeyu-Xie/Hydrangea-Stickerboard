@@ -48,3 +48,7 @@
     height: 100vh;
     flex-wrap: wrap;
 }
+
+#sub-right-content-box {
+    flex-wrap: wrap;
+}
