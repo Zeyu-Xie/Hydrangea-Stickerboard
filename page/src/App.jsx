@@ -15,7 +15,19 @@ class App extends React.Component {
                         </div>
                     </div>
                     <div id="right-content-box" className="d-flex col-12 col-md-8">
-
+                        {/* <ul id="sortable">
+                            <li className="ui-state-default"><span className="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 1</li>
+                            <li className="ui-state-default"><span className="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 2</li>
+                            <li className="ui-state-default"><span className="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 3</li>
+                            <li className="ui-state-default"><span className="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 4</li>
+                            <li className="ui-state-default"><span className="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 5</li>
+                            <li className="ui-state-default"><span className="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 6</li>
+                            <li className="ui-state-default"><span className="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 7</li>
+                        </ul> */}
+                        <div id="sub-right-content-box" className="d-flex m-auto">
+                            <button className="btn btn-outline-secondary">Submit</button>
+                            <a href="http://127.0.0.1:15372/stickerboard/api/downloadImage">Download</a>
+                        </div>
                     </div>
                 </div>
             </div>
