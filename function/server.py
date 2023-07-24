@@ -20,7 +20,7 @@ def submitPhotos():
     data=request
     file=data.files.get("file")
     print(file)
-    file.save(os.path.join(script_directory, "app", file.filename))
+    file.save(os.path.join(script_directory, "uploads", file.filename))
 
     # stickerboard()
     return {"ok": "1"}
