@@ -23,7 +23,7 @@ def submitImages():
     print(data.files)
     file = data.files.get("file")
     print(file)
-    file.save(os.path.join(script_directory, "app", "sources", file.filename))
+    file.save(os.path.join(script_directory, "app", "sources", data.args.get("index")+"."+data.args.get("type")))
     return {"ok": 1}
 
 @app.route("/stickerboard/api/processImages")

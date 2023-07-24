@@ -86,7 +86,7 @@ class App extends React.Component {
 
         for (let i = 0; i < num; i++) {
             console.log(this.state.imageList[src_lis[i]])
-            await axios.post("http://127.0.0.1:15372/stickerboard/api/submitImage", this.state.imageList[src_lis[i]], {
+            await axios.post(`http://127.0.0.1:15372/stickerboard/api/submitImage?index=${i}&type=${this.state.imageList[src_lis[i]].get("file").type.split("/")[1]}`, this.state.imageList[src_lis[i]], {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 }
