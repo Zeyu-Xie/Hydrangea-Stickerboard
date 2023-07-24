@@ -5,6 +5,9 @@ from flask_cors import CORS
 from app.app import stickerboard
 import os
 
+script_path = os.path.abspath(__file__)
+script_directory = os.path.dirname(script_path)
+
 warnings.filterwarnings("ignore")
 
 app = Flask(__name__, static_folder="static")
@@ -14,9 +17,10 @@ CORS(app, origins="*", resources="*", methods=["GET", "POST"], allow_headers=["C
 
 @app.route("/stickerboard/api/submitImages", methods=["POST"])
 def submitPhotos():
-    data=request.form.to_dict()
-
-    print(data)
+    data=request
+    file=data.files.get("file")
+    print(file)
+    file.save(os.path.join(script_directory, "app", file.filename))
 
     # stickerboard()
     return {"ok": "1"}

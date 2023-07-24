@@ -34,7 +34,7 @@ class App extends React.Component {
                         </ul> */}
 
                         <div id="sub-right-content-box" className="input-group m-auto">
-                            <input type="file" className="form-control" placeholder="Recipient's username" aria-label="Recipient's username with two button addons" ref={this.file} multiple />
+                            <input type="file" className="form-control" placeholder="Recipient's username" aria-label="Recipient's username with two button addons" ref={this.file} multiple="multiple"/>
                             <button className="btn btn-outline-secondary" type="button" onClick={this.submit}>Submit</button>
                             <a href="#" className="btn btn-outline-secondary" type="button">Download</a>
                         </div>
@@ -47,26 +47,27 @@ class App extends React.Component {
     submit = () => {
         let files = this.file.current.files
         const num = files.length
-        console.log(num)
 
         let formData = new Array(num)
         for (let i = 0; i < num; i++) {
             let fd = new FormData()
-            fd.append("file", "12345")
-            console.log(fd)
+            fd.append("file", files[i])
+            console.log(files[i])
             formData[i] = fd
         }
 
-        axios.post("http://127.0.0.1:15372/stickerboard/api/submitImages", formData[0], {
-            headers: {
-                "Content-Type": "multipart/form-data",
-                "Accept": "application/json"
-            }
-        }).then(res => {
-            console.log(res)
-        }).catch(err => {
-            console.log("ERROR", err)
-        })
+        for(let i=0;i<num;i++) {
+            axios.post("http://127.0.0.1:15372/stickerboard/api/submitImages", formData[i], {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            }).then(res => {
+                console.log(res)
+            }).catch(err => {
+                console.log("ERROR", err)
+            })
+        }
+        
     }
 }
 
