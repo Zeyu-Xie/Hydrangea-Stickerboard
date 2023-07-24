@@ -9,6 +9,7 @@ class App extends React.Component {
 
     componentDidMount() {
         this.submit = this.submit.bind(this)
+        // this.download=this.download.bind(this)
     }
 
     render() {
@@ -23,20 +24,11 @@ class App extends React.Component {
                         </div>
                     </div>
                     <div id="right-content-box" className="d-flex col-12 col-md-8">
-                        {/* <ul id="sortable">
-                            <li className="ui-state-default"><span className="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 1</li>
-                            <li className="ui-state-default"><span className="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 2</li>
-                            <li className="ui-state-default"><span className="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 3</li>
-                            <li className="ui-state-default"><span className="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 4</li>
-                            <li className="ui-state-default"><span className="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 5</li>
-                            <li className="ui-state-default"><span className="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 6</li>
-                            <li className="ui-state-default"><span className="ui-icon ui-icon-arrowthick-2-n-s"></span>Item 7</li>
-                        </ul> */}
 
                         <div id="sub-right-content-box" className="input-group m-auto">
                             <input type="file" className="form-control" placeholder="Recipient's username" aria-label="Recipient's username with two button addons" ref={this.file} multiple="multiple" />
                             <button className="btn btn-outline-secondary" type="button" onClick={this.submit}>Submit</button>
-                            <a href="#" className="btn btn-outline-secondary" type="button">Download</a>
+                            <a href="http://127.0.0.1:15372/stickerboard/api/downloadImage" className="btn btn-outline-secondary" type="button">Download</a>
                         </div>
                     </div>
                 </div>

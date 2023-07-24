@@ -1,4 +1,4 @@
-all: install build apply_build
+all: install build apply_build clear_cache
 
 install:
 	echo "Installing dependencies in page."
@@ -19,6 +19,12 @@ apply_build:
 run:
 	echo "Starting the project..."
 	python3 ./function/server.py
+
+clear_cache:
+	echo "Removing uploaded photos."
+	rm ./function/app/sources/*
+	echo "Removing the output image."
+	rm ./function/app/output.png
 
 clear:
 	echo "Removing dependencies in page."
