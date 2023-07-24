@@ -34,7 +34,7 @@ class App extends React.Component {
                         </ul> */}
 
                         <div id="sub-right-content-box" className="input-group m-auto">
-                            <input type="file" className="form-control" placeholder="Recipient's username" aria-label="Recipient's username with two button addons" ref={this.file} multiple="multiple"/>
+                            <input type="file" className="form-control" placeholder="Recipient's username" aria-label="Recipient's username with two button addons" ref={this.file} multiple="multiple" />
                             <button className="btn btn-outline-secondary" type="button" onClick={this.submit}>Submit</button>
                             <a href="#" className="btn btn-outline-secondary" type="button">Download</a>
                         </div>
@@ -44,7 +44,7 @@ class App extends React.Component {
         )
     }
 
-    submit = () => {
+    submit = async () => {
         let files = this.file.current.files
         const num = files.length
 
@@ -56,8 +56,8 @@ class App extends React.Component {
             formData[i] = fd
         }
 
-        for(let i=0;i<num;i++) {
-            axios.post("http://127.0.0.1:15372/stickerboard/api/submitImages", formData[i], {
+        for (let i = 0; i < num; i++) {
+            await axios.post("http://127.0.0.1:15372/stickerboard/api/submitImage", formData[i], {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 }
@@ -67,7 +67,13 @@ class App extends React.Component {
                 console.log("ERROR", err)
             })
         }
-        
+
+        axios.get("http://127.0.0.1:15372/stickerboard/api/processImages").then(res => {
+            console.log(res)
+        }).catch(err => {
+            console.log("ERROR", err)
+        })
+
     }
 }
 

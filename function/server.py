@@ -13,22 +13,26 @@ warnings.filterwarnings("ignore")
 app = Flask(__name__, static_folder="static")
 PORT = 15372
 socketio = SocketIO(app, cors_allowed_origins="*")
-CORS(app, origins="*", resources="*", methods=["GET", "POST"], allow_headers=["Content-Type", "Accept"], supports_credentials=True)
+CORS(app, origins="*", resources="*", methods=["GET", "POST"], allow_headers=[
+     "Content-Type", "Accept"], supports_credentials=True)
 
-@app.route("/stickerboard/api/submitImages", methods=["POST"])
-def submitPhotos():
-    data=request
-    file=data.files.get("file")
+
+@app.route("/stickerboard/api/submitImage", methods=["POST"])
+def submitImages():
+    data = request
+    file = data.files.get("file")
     print(file)
-    file.save(os.path.join(script_directory, "uploads", file.filename))
+    file.save(os.path.join(script_directory, "app", "sources", file.filename))
+    return {"ok": 1}
 
-    # stickerboard()
-    return {"ok": "1"}
-
+@app.route("/stickerboard/api/processImages")
+def processImages():
+    stickerboard()
+    return {"ok": 1}
 
 @app.route("/stickerboard/api/downloadImage")
 def downloadImage():
-    res = send_file("app/output.png")
+    res = send_file(os.path.join(script_directory,"app","output.png"))
     res.headers["Content-Disposition"] = "attachment; filename=output.png"
     return res
 
