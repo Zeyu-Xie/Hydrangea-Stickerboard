@@ -20,9 +20,7 @@ CORS(app, origins="*", resources="*", methods=["GET", "POST"], allow_headers=[
 @app.route("/stickerboard/api/submitImage", methods=["POST"])
 def submitImages():
     data = request
-    print(data.files)
     file = data.files.get("file")
-    print(file)
     file.save(os.path.join(script_directory, "app", "sources", data.args.get("index")+"."+data.args.get("type")))
     return {"ok": 1}
 

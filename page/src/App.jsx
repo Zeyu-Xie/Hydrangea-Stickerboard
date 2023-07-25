@@ -34,21 +34,23 @@ class App extends React.Component {
                     </div>
                     <div id="right-content-box" className="d-flex col-12 col-md-8">
 
-                        <div id="sub-right-content-box" className="input-group m-auto">
-                            <input type="file" className="form-control" placeholder="Recipient's username" aria-label="Recipient's username with two button addons" ref={this.file} multiple="multiple" />
-                            <button className="btn btn-outline-secondary" type="button" onClick={this.update}>Update</button>
-                            <button className="btn btn-outline-secondary" type="button" onClick={this.submit}>Submit</button>
-                            <a href="http://127.0.0.1:15372/stickerboard/api/downloadImage" className="btn btn-outline-secondary" type="button">Download</a>
+                        <div className="m-auto col-12">
+                            <div id="sub-right-content-box" className="input-group m-auto pb-4">
+                                <input type="file" className="form-control" placeholder="Recipient's username" aria-label="Recipient's username with two button addons" ref={this.file} multiple="multiple" />
+                                <button className="btn btn-outline-secondary" type="button" onClick={this.update}>Update</button>
+                                <button className="btn btn-outline-secondary" type="button" onClick={this.submit}>Submit</button>
+                                <a href="http://127.0.0.1:15372/stickerboard/api/downloadImage" className="btn btn-outline-secondary" type="button">Download</a>
+                            </div>
+                            <ul id="sortable" ref={this.imageList}>
+                                {
+                                    this.state.imageList && this.state.imageList.map((item, index) => {
+                                        return <li className="ui-state-default bg-white border-secondary-subtle d-flex">
+                                            <img src={URL.createObjectURL(item.get("file"))} alt={`${index}`} />
+                                        </li>
+                                    })
+                                }
+                            </ul>
                         </div>
-                        <ul id="sortable" ref={this.imageList}>
-                            {
-                                this.state.imageList && this.state.imageList.map((item, index) => {
-                                    return <li className="ui-state-default bg-white border-secondary-subtle d-flex">
-                                        <img src={URL.createObjectURL(item.get("file"))} alt={`${index}`} />
-                                    </li>
-                                })
-                            }
-                        </ul>
                     </div>
                 </div>
             </div>
@@ -71,7 +73,7 @@ class App extends React.Component {
 
         this.setState({
             imageList: [...this.state.imageList, ...formData],
-            num: this.state.num+num
+            num: this.state.num + num
         })
     }
 
@@ -85,22 +87,20 @@ class App extends React.Component {
         }
 
         for (let i = 0; i < num; i++) {
-            console.log(this.state.imageList[src_lis[i]])
             await axios.post(`http://127.0.0.1:15372/stickerboard/api/submitImage?index=${i}&type=${this.state.imageList[src_lis[i]].get("file").type.split("/")[1]}`, this.state.imageList[src_lis[i]], {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 }
-            }).then(res => {
-                console.log(res)
             }).catch(err => {
                 console.log("ERROR", err)
             })
         }
 
-        await axios.get("http://127.0.0.1:15372/stickerboard/api/processImages").then(res=>{
-            console.log(res)
-        }).catch(err=>{
-            console.log("ERROR",err)
+        await axios.get("http://127.0.0.1:15372/stickerboard/api/processImages").then(res => {
+            window.alert("Success")
+        }).catch(err => {
+            window.alert("ERROR" + " " + err)
+            console.log("ERROR", err)
         })
     }
 
