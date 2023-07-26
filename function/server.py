@@ -18,7 +18,7 @@ CORS(app, origins="*", resources="*", methods=["GET", "POST"], allow_headers=[
 
 
 @app.route("/stickerboard/api/submitImage", methods=["POST"])
-def submitImages():
+def submitImage():
     data = request
     file = data.files.get("file")
     file.save(os.path.join(script_directory, "app", "sources", data.args.get("index")+"."+data.args.get("type")))
@@ -27,6 +27,10 @@ def submitImages():
 @app.route("/stickerboard/api/processImages")
 def processImages():
     stickerboard()
+    cache_directory=os.path.join(script_directory,"app","sources")
+    for fileName in os.listdir(cache_directory):
+        file_path=os.path.join(cache_directory, fileName)
+        os.remove(file_path)
     return {"ok": 1}
 
 @app.route("/stickerboard/api/downloadImage")

@@ -2,6 +2,7 @@ import React from "react"
 import "./App.css"
 import hydrangea from "./hydrangea.png"
 import axios from "axios"
+import config from "./config.json"
 
 class App extends React.Component {
 
@@ -39,7 +40,7 @@ class App extends React.Component {
                                 <input type="file" className="form-control" placeholder="Recipient's username" aria-label="Recipient's username with two button addons" ref={this.file} multiple="multiple" />
                                 <button className="btn btn-outline-secondary" type="button" onClick={this.update}>Update</button>
                                 <button className="btn btn-outline-secondary" type="button" onClick={this.submit}>Submit</button>
-                                <a href="http://127.0.0.1:15372/stickerboard/api/downloadImage" className="btn btn-outline-secondary" type="button">Download</a>
+                                <a href={`${config.urls["Hydrangea-Stickerboard"]}/stickerboard/api/downloadImage`} className="btn btn-outline-secondary" type="button">Download</a>
                             </div>
                             <ul id="sortable" ref={this.imageList}>
                                 {
@@ -87,7 +88,7 @@ class App extends React.Component {
         }
 
         for (let i = 0; i < num; i++) {
-            await axios.post(`http://127.0.0.1:15372/stickerboard/api/submitImage?index=${i}&type=${this.state.imageList[src_lis[i]].get("file").type.split("/")[1]}`, this.state.imageList[src_lis[i]], {
+            await axios.post(`${config.urls["Hydrangea-Stickerboard"]}/stickerboard/api/submitImage?index=${i}&type=${this.state.imageList[src_lis[i]].get("file").type.split("/")[1]}`, this.state.imageList[src_lis[i]], {
                 headers: {
                     "Content-Type": "multipart/form-data"
                 }
@@ -96,7 +97,7 @@ class App extends React.Component {
             })
         }
 
-        await axios.get("http://127.0.0.1:15372/stickerboard/api/processImages").then(res => {
+        await axios.get(`${config.urls["Hydrangea-Stickerboard"]}/stickerboard/api/processImages`).then(res => {
             window.alert("Success")
         }).catch(err => {
             window.alert("ERROR" + " " + err)
