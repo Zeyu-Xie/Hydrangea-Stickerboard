@@ -17,8 +17,8 @@ with open(config_path, "r") as config_file:
 
 app = Flask(__name__, static_folder="static")
 CORS(app, origins="*", resources="*")
-CORS(app, methods=["GET", "POST"], allow_headers=[
-     "Content-Type", "Accept"], supports_credentials=True)
+# CORS(app, methods=["GET", "POST"], allow_headers=[
+#      "Content-Type", "Accept"], supports_credentials=True)
 
 @app.route("/stickerboard/api/submitImage", methods=["POST"])
 def submitImage():
