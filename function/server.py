@@ -3,39 +3,44 @@ import warnings
 from flask_socketio import SocketIO
 from flask_cors import CORS
 from app.app import stickerboard
+import json
 import os
 
 script_path = os.path.abspath(__file__)
 script_directory = os.path.dirname(script_path)
-
-warnings.filterwarnings("ignore")
+config_path = os.path.join(script_directory, "config.json")
+source_directory = os.path.join(script_directory, "app", "sources")
+output_path = os.path.join(script_directory, "app", "output.png")
+config = {}
+with open(config_path, "r") as config_file:
+    config = json.load(config_file)
 
 app = Flask(__name__, static_folder="static")
-PORT = 15372
-socketio = SocketIO(app, cors_allowed_origins="*")
-CORS(app, origins="*", resources="*", methods=["GET", "POST"], allow_headers=[
+CORS(app, origins="*", resources="*")
+CORS(app, methods=["GET", "POST"], allow_headers=[
      "Content-Type", "Accept"], supports_credentials=True)
-
 
 @app.route("/stickerboard/api/submitImage", methods=["POST"])
 def submitImage():
     data = request
     file = data.files.get("file")
-    file.save(os.path.join(script_directory, "app", "sources", data.args.get("index")+"."+data.args.get("type")))
+    file.save(os.path.join(source_directory, data.args.get(
+        "index")+"."+data.args.get("type")))
     return {"ok": 1}
+
 
 @app.route("/stickerboard/api/processImages")
 def processImages():
     stickerboard()
-    cache_directory=os.path.join(script_directory,"app","sources")
-    for fileName in os.listdir(cache_directory):
-        file_path=os.path.join(cache_directory, fileName)
+    for fileName in os.listdir(source_directory):
+        file_path = os.path.join(source_directory, fileName)
         os.remove(file_path)
     return {"ok": 1}
 
+
 @app.route("/stickerboard/api/downloadImage")
 def downloadImage():
-    res = send_file(os.path.join(script_directory,"app","output.png"))
+    res = send_file(output_path)
     res.headers["Content-Disposition"] = "attachment; filename=output.png"
     return res
 
@@ -46,4 +51,4 @@ def page():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=PORT)
+    app.run(host=config["host"], port=config["port"])
