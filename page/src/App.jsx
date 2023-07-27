@@ -38,6 +38,8 @@ class App extends React.Component {
                         <div className="m-auto col-12">
                             <div id="sub-right-content-box" className="input-group m-auto pb-4">
                                 <input type="file" className="form-control" placeholder="Recipient's username" aria-label="Recipient's username with two button addons" ref={this.file} multiple="multiple" />
+                            </div>
+                            <div id="sub-right-content-box" className="input-group m-auto pb-4">
                                 <button className="btn btn-outline-secondary" type="button" onClick={this.update}>Update</button>
                                 <button className="btn btn-outline-secondary" type="button" onClick={this.submit}>Submit</button>
                                 <a href={`${config.urls["Hydrangea-Stickerboard"]}/stickerboard/api/downloadImage`} className="btn btn-outline-secondary" type="button">Download</a>
