@@ -41,6 +41,7 @@ apply_build() {
   cp "$PAGE_BUILD_DIR/index.html" "$FUNCTION_TEMPLATES_DIR"
   cp -R "$PAGE_BUILD_DIR/" "$FUNCTION_APP_DIR"
   rm "$FUNCTION_DIR/index.html"
+  mkdir "$FUNCTION_APP_DIR/sources"
 }
 
 run() {

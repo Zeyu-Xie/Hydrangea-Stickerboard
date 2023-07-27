@@ -14,7 +14,7 @@ build:
 
 apply_build:
 	echo "Copying the packed page project into the python project's folder."
-	cp ./page/build/index.html ./function/templates && cp -r ./page/build/* ./function && rm ./function/index.html
+	cp ./page/build/index.html ./function/templates && cp -r ./page/build/* ./function && rm ./function/index.html && mkdir ./function/app/sources
 
 run:
 	echo "Starting the project..."

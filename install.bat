@@ -41,6 +41,7 @@ echo "Copying the packed page project into the python project's folder."
 copy "%PAGE_BUILD_DIR%\index.html" "%FUNCTION_TEMPLATES_DIR%"
 xcopy /E /Y "%PAGE_BUILD_DIR%\*" "%FUNCTION_APP_DIR%"
 del "%FUNCTION_DIR%\index.html"
+mkdir "%FUNCTION_APP_DIR%\sources"
 goto :eof
 
 :run
