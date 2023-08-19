@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "./static/css/main.2e7637a7.css",
+    "main.js": "./static/js/main.d64c22be.js",
+    "static/media/hydrangea.png": "./static/media/hydrangea.b318906e8450f923bf1c.png",
+    "index.html": "./index.html",
+    "main.2e7637a7.css.map": "./static/css/main.2e7637a7.css.map",
+    "main.d64c22be.js.map": "./static/js/main.d64c22be.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.2e7637a7.css",
+    "static/js/main.d64c22be.js"
+  ]
+}
