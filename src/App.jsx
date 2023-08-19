@@ -81,30 +81,13 @@ class App extends React.Component {
     }
 
 
-    submit = async () => {
+    submit = () => {
         const lis = document.getElementById("sortable").children
         const num = this.state.num
         let src_lis = new Array(num)
         for (let i = 0; i < num; i++) {
             src_lis[i] = lis[i].children[0].getAttribute("alt")
         }
-
-        for (let i = 0; i < num; i++) {
-            await axios.post(`${config.urls["Hydrangea-Stickerboard"]}/stickerboard/api/submitImage?index=${i}&type=${this.state.imageList[src_lis[i]].get("file").type.split("/")[1]}`, this.state.imageList[src_lis[i]], {
-                headers: {
-                    "Content-Type": "multipart/form-data"
-                }
-            }).catch(err => {
-                console.log("ERROR", err)
-            })
-        }
-
-        await axios.get(`${config.urls["Hydrangea-Stickerboard"]}/stickerboard/api/processImages`).then(res => {
-            window.alert("Success")
-        }).catch(err => {
-            window.alert("ERROR" + " " + err)
-            console.log("ERROR", err)
-        })
     }
 
 }
