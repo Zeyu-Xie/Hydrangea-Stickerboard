@@ -9,7 +9,6 @@ class App extends React.Component {
 
     file = React.createRef()
     imageList = React.createRef()
-    realDownload=React.createRef()
 
     constructor(props) {
         super(props)
@@ -45,7 +44,7 @@ class App extends React.Component {
                                 <button className="btn btn-outline-secondary" type="button" onClick={this.update}>Update</button>
                                 <button className="btn btn-outline-secondary" type="button" onClick={this.download}>Download</button>
                             </div>
-                            <a id="real-download" href="#" download="output.png" ref={this.realDownload}>Real Download</a>
+                            <a id="real-download" href="#" download="output.png">Real Download</a>
                             <ul id="sortable" ref={this.imageList}>
                                 {
                                     this.state.imageList && this.state.imageList.map((item, index) => {
