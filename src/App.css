@@ -1,16 +1,20 @@
 * {
-    font-family: 'Courier New', Courier, monospace;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+body {
+    background-image: url("./bg.jpeg");
+    background-position: center;
 }
 
 #sortable {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    width: 100%;
 }
 
 #sortable li {
-    border: solid 1px black;
+    border: none;
     margin: 10px 10px 10px 0;
     padding: 5px;
     float: left;
@@ -42,11 +46,15 @@
 }
 
 #heading {
-    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-family: "child";
+    color: white;
+    letter-spacing: 2px;
 }
 
 #signing {
     font-family: fantasy;
+    color: white;
+    font-weight: 900;
 }
 
 #hydrangea {
@@ -65,4 +73,37 @@
 
 #real-download {
     display: none;
+}
+
+#spinner {
+    position: fixed;
+    left: 20px;
+    bottom: 20px;
+}
+
+#update, #download,#input-label {
+    background: none;
+    color: white;
+    border: none;
+}
+
+#input {
+    /* border: none; */
+    background: none;
+    color: white;
+    max-width: 648px;
+    display: none;
+}
+
+#input:hover {
+    background: none;
+}
+
+@font-face {
+    font-family: "child";
+    src: url("./child.otf");
+}
+
+#test {
+    width: fit-content;
 }
