@@ -63,3 +63,6 @@
     flex-wrap: wrap;
 }
 
+#real-download {
+    display: none;
+}

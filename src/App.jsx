@@ -3,11 +3,13 @@ import axios from "axios"
 import hydrangea from "./hydrangea.png"
 import "./App.css"
 import config from "./config.json"
+import { formDataToBlob, base64ToBlob, urlToBlob, blobToBase64, blobToFormData, blobToUrl } from "lavender-imageconverter"
 
 class App extends React.Component {
 
     file = React.createRef()
     imageList = React.createRef()
+    realDownload=React.createRef()
 
     constructor(props) {
         super(props)
@@ -18,8 +20,8 @@ class App extends React.Component {
     }
 
     componentDidMount() {
-        this.submit = this.submit.bind(this)
         this.update = this.update.bind(this)
+        this.download=this.download.bind(this)
     }
 
     render() {
@@ -41,14 +43,14 @@ class App extends React.Component {
                             </div>
                             <div id="sub-right-content-box" className="input-group m-auto pb-4">
                                 <button className="btn btn-outline-secondary" type="button" onClick={this.update}>Update</button>
-                                <button className="btn btn-outline-secondary" type="button" onClick={this.submit}>Submit</button>
-                                <a href={`${config.urls["Hydrangea-Stickerboard"]}/stickerboard/api/downloadImage`} className="btn btn-outline-secondary" type="button">Download</a>
+                                <button className="btn btn-outline-secondary" type="button" onClick={this.download}>Download</button>
                             </div>
+                            <a id="real-download" href="#" download="output.png" ref={this.realDownload}>Real Download</a>
                             <ul id="sortable" ref={this.imageList}>
                                 {
                                     this.state.imageList && this.state.imageList.map((item, index) => {
                                         return <li className="ui-state-default bg-white border-secondary-subtle d-flex">
-                                            <img src={URL.createObjectURL(item.get("file"))} alt={`${index}`} />
+                                            <img src={item.src} alt={`${index}`} />
                                         </li>
                                     })
                                 }
@@ -60,52 +62,55 @@ class App extends React.Component {
         )
     }
 
-    update = () => {
-        const files = this.file.current.files
-
-        const num = files.length
-        let formData = new Array(num)
-
+    update = async () => {
+        const files = this.file.current.files;
+        const num = files.length;
+    
         for (let i = 0; i < num; i++) {
-            formData[i] = new FormData()
-            let fd = new FormData()
-            fd.append("file", files[i])
-            fd.append("alt", this.state.num + i)
-            formData[i] = fd
+            let image = new Image();
+            image.src = blobToUrl(files[i]);
+    
+            ((index, img) => {
+                img.onload = () => {
+                    let l = this.state.imageList.slice(); // 创建一个副本以避免直接修改原数组
+                    l.push(image)
+                    this.setState({
+                        imageList: l,
+                        num: this.state.num + 1
+                    }, () => {
+                        console.log(this.state);
+                    });
+                };
+            })(i, image);
         }
-
-        this.setState({
-            imageList: [...this.state.imageList, ...formData],
-            num: this.state.num + num
-        })
     }
 
-
-    submit = async () => {
-        const lis = document.getElementById("sortable").children
-        const num = this.state.num
-        let src_lis = new Array(num)
-        for (let i = 0; i < num; i++) {
-            src_lis[i] = lis[i].children[0].getAttribute("alt")
+    download=()=>{
+        const canvas=document.createElement("canvas")
+        const ctx=canvas.getContext("2d")
+        let h=0
+        const num=this.state.num
+        let height=0
+        let width=0
+        for(let i=0;i<num;i++) {
+            height+=this.state.imageList[i].height
+            width=Math.max(width, this.state.imageList[i].width)
         }
-
-        for (let i = 0; i < num; i++) {
-            await axios.post(`${config.urls["Hydrangea-Stickerboard"]}/stickerboard/api/submitImage?index=${i}&type=${this.state.imageList[src_lis[i]].get("file").type.split("/")[1]}`, this.state.imageList[src_lis[i]], {
-                headers: {
-                    "Content-Type": "multipart/form-data"
-                }
-            }).catch(err => {
-                console.log("ERROR", err)
-            })
+        canvas.setAttribute("width", width)
+        canvas.setAttribute("height", height)
+        for(let i=0;i<num;i++) {
+            ctx.drawImage(this.state.imageList[i],0,h)
+            h+=this.state.imageList[i].height
         }
-
-        await axios.get(`${config.urls["Hydrangea-Stickerboard"]}/stickerboard/api/processImages`).then(res => {
-            window.alert("Success")
-        }).catch(err => {
-            window.alert("ERROR" + " " + err)
-            console.log("ERROR", err)
-        })
+        const url=canvas.toDataURL("image/png")
+        const realDownload=document.getElementById("real-download")
+        realDownload.setAttribute("href", url)
+        realDownload.click()
+        // const image=document.createElement("img")
+        // image.setAttribute("src", url)
+        // document.body.appendChild(image)
     }
+    
 
 }
 
