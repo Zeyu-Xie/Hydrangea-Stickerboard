@@ -4,6 +4,7 @@ import hydrangea from "./hydrangea.png"
 import "./App.css"
 import config from "./config.json"
 import { formDataToBlob, base64ToBlob, urlToBlob, blobToBase64, blobToFormData, blobToUrl } from "lavender-imageconverter"
+import {v4 as uuidv4} from "uuid"
 
 class App extends React.Component {
 
@@ -49,7 +50,7 @@ class App extends React.Component {
                                 {
                                     this.state.imageList && this.state.imageList.map((item, index) => {
                                         return <li className="ui-state-default bg-white border-secondary-subtle d-flex">
-                                            <img src={item.src} alt={`${index}`} />
+                                            <img className="uploadedPhotos" src={item.src} alt={`${index}`} />
                                         </li>
                                     })
                                 }
@@ -76,8 +77,6 @@ class App extends React.Component {
                     this.setState({
                         imageList: l,
                         num: this.state.num + 1
-                    }, () => {
-                        console.log(this.state);
                     });
                 };
             })(i, image);
@@ -97,17 +96,19 @@ class App extends React.Component {
         }
         canvas.setAttribute("width", width)
         canvas.setAttribute("height", height)
+
+        const uploadedPhotos=document.getElementsByClassName("uploadedPhotos")
+
         for(let i=0;i<num;i++) {
-            ctx.drawImage(this.state.imageList[i],0,h)
-            h+=this.state.imageList[i].height
+            const t=uploadedPhotos[i].getAttribute("alt")
+            ctx.drawImage(this.state.imageList[t],0,h)
+            h+=this.state.imageList[t].height
         }
         const url=canvas.toDataURL("image/png")
         const realDownload=document.getElementById("real-download")
         realDownload.setAttribute("href", url)
+        realDownload.setAttribute("download", uuidv4()+".png")
         realDownload.click()
-        // const image=document.createElement("img")
-        // image.setAttribute("src", url)
-        // document.body.appendChild(image)
     }
     
 
