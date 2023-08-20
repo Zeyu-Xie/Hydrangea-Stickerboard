@@ -45,7 +45,7 @@ class App extends React.Component {
                                 <button id="update" className="btn btn-outline-secondary" type="button" onClick={this.update}>Update</button>
                                 <button id="download" className="btn btn-outline-secondary" type="button" onClick={this.download}>Download</button>
                             </div>
-                            <a id="real-download" href="#" download="output.png">Real Download</a>
+                            <a id="real-download" href="#" type="image/png" download="output.png">Real Download</a>
                             <ul id="sortable" ref={this.imageList}>
                                 {
                                     this.state.imageList && this.state.imageList.map((item, index) => {
